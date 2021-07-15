@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uber/view/cadastro.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -81,9 +80,7 @@ class _HomeState extends State<Home> {
                     child: GestureDetector(
                       child: Text("Não tem conta? Cadastre-se!", style: TextStyle(color: Colors.white)),
                       onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Cadastro()));
+                        Navigator.pushNamed(context, "/cadastro");
                       },
                     ),
                   ),

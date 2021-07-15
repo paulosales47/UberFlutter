@@ -1,5 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uber/model/usuario.dart';
+import 'package:uber/service/auth_service.dart';
+import 'package:uber/service/firestore_service.dart';
 
 class Cadastro extends StatefulWidget {
   const Cadastro({Key? key}) : super(key: key);
@@ -14,6 +19,44 @@ class _CadastroState extends State<Cadastro> {
   var _controllerEmail = TextEditingController();
   var _controllerSenha = TextEditingController();
   bool _usuarioMotorista = false;
+  String _mensagemErro = "";
+
+  bool _validarCampos(){
+    _mensagemErro = "";
+
+    if(_controllerNome.text.isEmpty
+    || _controllerEmail.text.isEmpty
+    || !_controllerEmail.text.contains("@")
+    || _controllerSenha.text.isEmpty
+    || _controllerSenha.text.length < 8)
+      setState(() {
+        _mensagemErro = "Verifique se todos os campos foram preenchidos corretamente";
+      });
+
+
+    return _mensagemErro.length == 0;
+
+  }
+  Future<void> _cadastrarUsuario() async{
+     if(_validarCampos()){
+        var usuario = Usuario();
+        usuario.nome = _controllerNome.text;
+        usuario.email = _controllerEmail.text;
+        usuario.senha = _controllerSenha.text;
+        usuario.usuarioMotorista = _usuarioMotorista;
+
+        var auth = AuthService();
+        usuario.idUsuario = await auth.criarLoginUsuario(usuario);
+
+        var firestore = FirestoreService();
+        await firestore.cadastrarUsuario(usuario);
+
+        if(_usuarioMotorista)
+          Navigator.pushNamedAndRemoveUntil(context, "/motorista", (_) => false);
+        else
+          Navigator.pushNamedAndRemoveUntil(context, "/passageiro", (_) => false);
+     }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +107,7 @@ class _CadastroState extends State<Cadastro> {
                   style: TextStyle(fontSize: 20),
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      hintText: "senha",
+                      hintText: "senha (8 caracteres mín)",
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -90,7 +133,7 @@ class _CadastroState extends State<Cadastro> {
                   padding: EdgeInsets.only(top: 16, bottom: 16),
                   child: ElevatedButton(
                     child: Text("Cadastrar", style: TextStyle(fontSize: 20, color: Colors.white)),
-                    onPressed: (){},
+                    onPressed: _cadastrarUsuario,
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Color(0XFF1EBBD8)),
                         padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(32, 16, 32, 16))
@@ -100,7 +143,9 @@ class _CadastroState extends State<Cadastro> {
                 Padding(
                   padding: EdgeInsets.only(top: 16),
                   child: Center(
-                    child: Text("Erro", style: TextStyle(color: Colors.red, fontSize: 16)),
+                    child: _mensagemErro.isNotEmpty
+                        ? Text(_mensagemErro, style: TextStyle(color: Colors.red, fontSize: 16), textAlign: TextAlign.center)
+                        : Container(),
                   ),
                 )
               ],
