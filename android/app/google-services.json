@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "957048464461",
+    "project_id": "flutter-uber-estudo",
+    "storage_bucket": "flutter-uber-estudo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957048464461:android:fc13dd33df3ab9aa66e804",
+        "android_client_info": {
+          "package_name": "com.paulohs.sampaio.uber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957048464461-ed6kibu0ejhf10iup9r32rtal7lbecrd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.paulohs.sampaio.uber",
+            "certificate_hash": "a208327084f53f0f7b7c783c478f53270fb53366"
+          }
+        },
+        {
+          "client_id": "957048464461-cvq51la174blcancnohs78r0ime4l2r5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5EVSJYGYs6zKs_IGr2g_S5ON8S5_QmDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957048464461-cvq51la174blcancnohs78r0ime4l2r5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
