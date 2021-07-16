@@ -37,6 +37,7 @@ class _CadastroState extends State<Cadastro> {
     return _mensagemErro.length == 0;
 
   }
+
   Future<void> _cadastrarUsuario() async{
      if(_validarCampos()){
         var usuario = Usuario();

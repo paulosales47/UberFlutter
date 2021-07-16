@@ -16,4 +16,27 @@ class AuthService{
      return credential.user!.uid;
   }
 
+  Future<String> logarUsuario(Usuario usuario) async{
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    UserCredential credential = await auth.signInWithEmailAndPassword(email: usuario.email!, password: usuario.senha!);
+
+    return credential.user!.uid;
+  }
+
+  Future<void> deslogarUsuario() async{
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.signOut();
+  }
+
+  String verificaUsuarioLogado(){
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? usuario = auth.currentUser;
+
+    if(usuario != null)
+      return usuario.uid;
+
+    return "";
+  }
+
 }
